@@ -1,0 +1,21 @@
+version: "3"
+
+services:
+
+  db:
+    image: mquarneti/rooms-db
+    environment:
+      - MYSQL_ROOT_PASSWORD=<ROOT_PASSWORD>
+      - MYSQL_PASSWORD=<USER_PASSWORD>
+    restart: always
+
+  api:
+    image: mquarneti/rooms-api
+    environment:
+      - MYSQL_PASSWORD=<PASSWORD>
+    restart: always
+
+  web:
+    image: mquarneti/rooms-web
+    ports:
+      - 80:8080

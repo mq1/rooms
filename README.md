@@ -2,7 +2,7 @@
 
 A simple group chat software (school project)
 
-## Usage (requires docker and docker-composer)
+## Usage (requires docker and docker-compose)
 
 ```sh
 docker-compose up

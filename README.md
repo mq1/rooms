@@ -10,7 +10,7 @@ It is recommended to change the passwords in docker-compose.yml
 docker-compose up -d
 ```
 
-The server is online at http://localhost
+The server is online at http://localhost:8080
 
 ### The project
 

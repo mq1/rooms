@@ -10,7 +10,7 @@ services:
     restart: always
 
   rooms:
-    image: rooms
+    image: mquarneti/rooms
     environment:
       - MYSQL_PASSWORD=password
       - MYSQL_HOST=db

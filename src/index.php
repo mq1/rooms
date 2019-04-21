@@ -1,31 +1,40 @@
-<?
+<?php
+
 session_start();
+
+# load the db
+if (isset($_POST["new-room"]) || isset($_POST["enter-room"])) {
+    include "db.php";
+    $db = new DB;
+}
+
+# create a new room
+if (isset($_POST["new-room"])) {
+    $res = $db->new_room($_POST["name"], $_POST["password"]);
+}
+
+# enter into a room
+if (isset($_POST["enter-room"])) {
+    $res = $db->get_room_uuid($_POST["name"], $_POST["password"]);
+    if ($res["success"]) {
+        $_SESSION["room_uuid"] = $res["uuid"];
+    }
+}
+
+echo $res["errno"] . $res["error"];
+
+# exit from a room
+if (isset($_POST["exit-room"])) {
+    session_unset();
+    session_destroy();
+}
+
 ?>
-
-<!--
-Homepage
-
-Copyright (C) 2019 Manuel Quarneti
-
-This program is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
-
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with this program.  If not, see <https://www.gnu.org/licenses/>.
--->
 
 <!DOCTYPE html>
 <html>
 
 <head>
-    <meta charset="utf-8">
     <title>ROOMS</title>
 </head>
 
@@ -34,9 +43,12 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
     <a href="/new-room.html">Create a room</a>
     <br>
     <a href="/enter-room.html">Enter into a room</a>
-    <?
-    if (!empty($_SESSION["room_uuid"])) {
-        echo '<br><a href="/room.php">Go to room</a><br><a href="/exit-room.php">Exit room</a>';
+    <?php
+    if (isset($_SESSION["room_uuid"])) {
+        echo '<br><a href="/room.php">Go to room</a><br><form method="POST" action="index.php">
+            <input type="hidden" name="exit-room" value="submit">
+            <input type="submit" value="Exit room">
+            </form>';
     }
     ?>
 </body>

@@ -1,15 +1,15 @@
 # rooms
 
-A simple group chat software (school project)
+Chat di gruppo
 
-## Usage (requires docker and docker-compose)
+## Utilizzo
 
-* Download [docker-compose.yml](https://raw.githubusercontent.com/mquarneti/rooms/master/docker-compose.yml)
-* It is recommended to change the passwords in docker-compose.yml
-* execute `docker-compose up -d` as root in the same directory as docker-compose.yml
+rooms necessita di un'instanza di un DBMS compatibile con MySQL in esecuzione.
 
-The server is online at http://localhost
+Il DBMS deve avere un database chiamato 'rooms' e un utente 'rooms_user' con accesso al database.
 
-### The project
+Per la creazione delle tabelle si deve eseguire initdb.sql nel database 'rooms'.
 
-[rooms](https://github.com/mquarneti/rooms) requires a running database: [rooms-db](https://github.com/mquarneti/rooms-db) based on the mariadb docker image
+I file nella cartella src devono essere spostati nella document root di un web server con abilitato php.
+
+php deve avere il modulo mysqli abilitato.

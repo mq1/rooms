@@ -25,15 +25,15 @@ class DB
         $res = $this->mysqli->query("SELECT uuid FROM rooms WHERE name = '$name'");
         $row = $res->fetch_assoc();
         if (!empty($row["uuid"])) {
-            return ["error" => "There\'s already a room with that name"];
+            return "There's already a room with that name";
         }
 
         # create the room
         if (!$this->mysqli->query("INSERT INTO rooms (name, password_hash) VALUES ('$name', '$password_hash')")) {
-            return ["errno" => $this->mysqli->errno, "error" => $this->mysqli->error];
+            return "Failed to create a room: (" . $this->mysqli->errno . ") " . $this->mysqli->error;
         }
 
-        return ["success" => true];
+        return;
     }
 
     function get_room_uuid($name, $password)
@@ -43,15 +43,15 @@ class DB
         $row = $res->fetch_assoc();
         $uuid = $row["uuid"];
         if (empty($uuid)) {
-            return ["error" => "Room not found"];
+            return "Room not found";
         }
 
         # check if the password matches the hash
         if (!password_verify($password, $row["password_hash"])) {
-            return ["error" => "Incorrect password"];
+            return "Incorrect password";
         }
 
-        return ["success" => true, "uuid" => $uuid];
+        return ["uuid" => $uuid];
     }
 
     function get_room_name($uuid)
@@ -60,10 +60,10 @@ class DB
         $row = $res->fetch_assoc();
         $name = $row["name"];
         if (empty($name)) {
-            return ["error" => "Room not found"];
+            return "Room not found";
         }
 
-        return ["success" => true, "name" => $name];
+        return $name;
     }
 
     function get_messages($room_uuid)
@@ -78,15 +78,35 @@ class DB
             array_push($messages, $message);
         }
 
-        return ["success" => true, "messages" => $messages];
+        return $messages;
     }
 
     function send_message($room_uuid, $content, $author)
     {
         if (!$this->mysqli->query("INSERT INTO messages (room_uuid, content, author) VALUES ('$room_uuid', '$content', '$author')")) {
-            return ["errno" => $this->mysqli->errno, "error" => $this->mysqli->error];
+            return "Failed to send a message: (" . $this->mysqli->errno . ") " . $this->mysqli->error;
         }
 
-        return ["success" => true];
+        return;
+    }
+
+    function change_room_name($uuid, $new_name)
+    {
+        if (!$this->mysqli->query("UPDATE rooms SET name = '$new_name' WHERE uuid = '$uuid'")) {
+            return "Failed to create a room: (" . $this->mysqli->errno . ") " . $this->mysqli->error;
+        }
+
+        return;
+    }
+
+    function delete_room($uuid)
+    {
+        if (!$this->mysqli->query("DELETE FROM rooms WHERE uuid = '$uuid'")) {
+            return "Failed to create a room: (" . $this->mysqli->errno . ") " . $this->mysqli->error;
+        }
+
+        return;
     }
 }
+
+?>

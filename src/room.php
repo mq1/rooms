@@ -1,14 +1,10 @@
 <?php
+
 session_start();
 
 include "db.php";
 $db = new DB;
 
-# send the message
-if (isset($_POST["content"])) {
-    $res = $db->send_message($_SESSION["room_uuid"], $content, $_POST["author"]);
-    echo $res["error"];
-}
 ?>
 
 <!DOCTYPE html>
@@ -21,34 +17,31 @@ if (isset($_POST["content"])) {
 <body>
     <h1>
         <?php
-        $res = $db->get_room_name($_SESSION["room_uuid"]);
-        echo $res["name"];
-        echo $res["error"];
+        echo $db->get_room_name($_SESSION["room_uuid"]);
         ?>
     </h1>
-
+    <hr>
     <h2>New message</h2>
-    <form method="POST" action="room.php">
+    <form method="POST" action="send-message.php">
         Content: <input type="text" name="content">
         <br>
-        Author: <input type="text" name="author">
+        Author: <input type="text" name="author" value='<?php echo $_COOKIE["author"] ?>'>
         <br>
         <input type="submit" value="send">
     </form>
+    <hr>
     <h2>
-        <form action="room.php">
-            Messages <input type="submit" value="refresh">
-        </form>
+        Messages <a href="/room.php">Refresh</a>
     </h2>
     <ul>
         <?php
         $res = $db->get_messages($_SESSION["room_uuid"]);
-        foreach ($res["messages"] as $message) {
+        foreach ($res as $message) {
             echo "<li>[" . $message["datetime"] . "] " . $message["author"] . " > " . $message["content"] . "</li>";
         }
         ?>
     </ul>
-    <a href="/">Go to the home page</a>
+    <a href="/" style="position: absolute; bottom: 0">Go to the home page</a>
 </body>
 
 </html>

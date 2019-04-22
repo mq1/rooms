@@ -13,3 +13,7 @@ Per la creazione delle tabelle si deve eseguire initdb.sql nel database 'rooms'.
 I file nella cartella src devono essere spostati nella document root di un web server con abilitato php.
 
 php deve avere il modulo mysqli abilitato.
+
+## Il progetto
+
+Tutti i file in src sono pagine **view**, tranne `db.php` che funge da **control** nel paradigma MVC.

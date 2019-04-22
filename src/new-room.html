@@ -3,6 +3,18 @@
 
 <head>
     <title>ROOMS</title>
+    <script>
+        var check = function () {
+            if (document.getElementById("password").value ==
+                document.getElementById("confirm-password").value) {
+                document.getElementById("message").style.color = "green";
+                document.getElementById("message").innerHTML = "Passwords match";
+            } else {
+                document.getElementById("message").style.color = "red";
+                document.getElementById("message").innerHTML = "Passwords don't match";
+            }
+        }
+    </script>
 </head>
 
 <body>
@@ -11,7 +23,11 @@
         <input type="hidden" name="new-room" value="submit">
         Name: <input type="text" name="name">
         <br>
-        Password: <input type="password" name="password">
+        Password: <input type="password" name="password" id="password" onkeyup="check();">
+        <br>
+        Confirm password: <input type="password" id="confirm-password" onkeyup="check();">
+        <br>
+        <span id="message"></span>
         <br>
         <input type="submit" value="Create">
     </form>

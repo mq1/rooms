@@ -6,7 +6,9 @@ include "db.php";
 $db = new DB;
 
 # send the message
-$res = $db->send_message($_SESSION["room_uuid"], $_POST["content"], $_POST["author"]);
+if (!empty($_POST["content"])) {
+    $res = $db->send_message($_SESSION["room_uuid"], $_POST["content"], $_POST["author"]);
+}
 
 # save the author
 if (isset($_POST["author"])) {

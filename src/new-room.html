@@ -2,7 +2,10 @@
 <html>
 
 <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>ROOMS</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.4/css/bulma.min.css">
     <script>
         var check = function () {
             if (document.getElementById("password").value ==
@@ -18,19 +21,44 @@
 </head>
 
 <body>
-    <h1>Create a new room</h1>
-    <form method="POST" action="new-room.php">
-        Name: <input type="text" name="name">
-        <br>
-        Password: <input type="password" name="password" id="password" onkeyup="check();">
-        <br>
-        Confirm password: <input type="password" id="confirm-password" onkeyup="check();">
-        <br>
-        <span id="message"></span>
-        <br>
-        <input type="submit" value="Create">
-    </form>
-    <a href="/" style="position: absolute; bottom: 0">Go to the home page</a>
+    <section class="section">
+        <div class="container">
+            <h1 class="title">
+                Create a new room
+            </h1>
+            <form method="POST" action="new-room.php">
+                <div class="field">
+                    <label class="label">Name</label>
+                    <div class="control">
+                        <input type="text" class="input" name="name">
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="label">Password</label>
+                    <div class="control">
+                        <input type="password" class="input" name="password" id="password" onkeyup="check();">
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="label">Confirm password</label>
+                    <div class="control">
+                        <input type="password" class="input" name="password" id="confirm-password" onkeyup="check();">
+                    </div>
+                    <span id="message"></span>
+                </div>
+                <div class="field">
+                    <div class="control">
+                        <input class="button" type="submit" value="Create">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </section>
+    <footer class="footer" style="position: absolute; width: 100%; bottom: 0">
+        <div class="content has-text-centered">
+            <a href="/">Go to the home page</a>
+        </div>
+    </footer>
 </body>
 
 </html>

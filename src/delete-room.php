@@ -8,9 +8,9 @@ $db = new DB;
 $res = $db->delete_room($_SESSION["room_uuid"]);
 
 if (!empty($res)) {
-    echo $res . "<br><a href="/">Go to the home page</a>";
+    echo $res . '<br><a href="/">Go to the home page</a>';
+} else {
+    header("Location: /exit-room.php");
 }
-
-header("Location: /exit-room.php");
 
 ?>

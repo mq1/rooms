@@ -16,9 +16,9 @@ if (isset($_POST["author"])) {
 }
 
 if (!empty($res)) {
-    echo $res . "<br><a href="/">Go to the home page</a>";
+    echo $res . '<br><a href="/">Go to the home page</a>';
+} else {
+    header("Location: /room.php");
 }
-
-header("Location: /room.php");
 
 ?>

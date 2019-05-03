@@ -9,7 +9,7 @@ class DB
         $this->mysqli = new mysqli(
             "127.0.0.1",
             "rooms_user",
-            "",
+            getenv("MYSQL_PASSWORD"),
             "rooms"
         );
         if ($this->mysqli->connect_errno) {
